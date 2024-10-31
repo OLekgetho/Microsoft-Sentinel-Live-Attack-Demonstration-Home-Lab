@@ -6,6 +6,7 @@ This is a walkthrough of how I used Microsoft Azure to create a virtual machine 
 
 # Utilities & Environments Used
 -  Microsoft Azure
+-  Microsoft Sentinel
 -  Virtual Machines
 -  Log Analytic Workbooks
 -  Powershell
@@ -124,14 +125,16 @@ After a few minutes, just before I decided to wrap up the project, I observed th
 
 ![Microsoft Sentinel](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(1).png)
 
-Now I created a alert that informs me when which IP has failed to login in more than 3 times. So I navigated to Microsoft Sentinel under the configuration at the Analtics section. The was already a alert created with a serverity of High. So I clicked the button create and choose the "Scheduled query rule", I configured the rule and called it "Multiple Login attempts from the same IP" and the severity is "Low" as I intentionally exposed the VM on the internet so the will be alot of people trying to gain access on it. If it was a vm that can only be accessed by an organization then the severity would be medium if indiviual in the workplace made more than 3 mistakes and high if it is an indiviual outside the organization.
+I created an alert that informs me when an IP address has failed to log in more than three times. I navigated to Microsoft Sentinel under the configuration section in Analytics. There was already an alert created with a severity level of High. I clicked the "Create" button and chose the "Scheduled query rule." I configured the rule and named it "Multiple Login Attempts from the Same IP," setting the severity to Low, as I intentionally exposed the VM on the internet, which means there will be many people trying to gain access. If it were a VM that could only be accessed by an organization, the severity would be Medium if an individual within the organization made more than three mistakes, and High if the attempts came from someone outside the organization.
 
 
 ![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(70).png)
 ![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(69).png)
 ![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(68).png)
 
-After configuring the General section i was on the Set rule logic section and I had to create a rule query basically the logic for my analytic rule. So my rule is that the logs that have an EventID of 4625 count them by the IPaddress and if the counted IPaddress is counted more than 3 times it will alert me and which IP it is. Then after I clicked next till the review + create section and clicked save to save the rule. Minutes after I saved the rule the was already an IP that was captured the IP orginates from Netherlands at Amsterdam. I wanted to see if it was the only IP that i can find so I when to logs and I queryed them and I saw the only IP appearing is the one captured and it has 310 failed attempts.
+After configuring the General section, I moved on to the Set Rule Logic section, where I had to create a rule query—essentially the logic for my analytic rule. My rule states that logs with an Event ID of 4625 should be counted by IP address, and if any IP address is counted more than three times, it will alert me along with the specific IP. After that, I clicked "Next" until I reached the Review + Create section and saved the rule.
+
+Minutes after saving, an IP was already captured; it originates from Amsterdam, Netherlands. I wanted to see if it was the only IP I could find, so I went to the logs and queried them. I found that the only IP appearing was the one captured, with a total of 310 failed attempts.
 
 ![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(67).png)
 ![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(66).png)
