@@ -1,8 +1,8 @@
-# Microsoft Sentinel Live Attack Demonstration Home Lab
+# Microsoft Sentinel Live Attack Demonstration Home Lab 
 
 ## Description 
 
-This is a walkthrough of how I used Microsoft Azure to create a virtual machine running Windows 10. I exposed the VM to the internet and utilized Azure Log Analytics Workspace, Microsoft Defender for Cloud, and Azure Sentinel to collect and aggregate attack data, displaying it on a map in Microsoft Sentinel. I will be using PowerShell to scan the Event Viewer in the exposed VM, specifically looking for Event ID 4625, which indicates failed logon attempts, and send that data to a log file. The PowerShell script also sends the IP address of any failed logons to IPgeolocation.io via an API, allowing that information to be used in Microsoft Sentinel to map where the logon attempts originated. This project was undertaken to gain experience with SIEMs, cloud concepts and resources, APIs, and Microsoft Azure. I learned how to provision and configure resources in the cloud, how to read SIEM logs, and much more.
+This is a walkthrough of how I used Microsoft Azure to create a virtual machine running Windows 10. I exposed the VM to the internet and utilized Azure Log Analytics Workspace, Microsoft Defender for Cloud, and Azure Sentinel to collect and aggregate attack data, displaying it on a map in Microsoft Sentinel. I will be using PowerShell to scan the Event Viewer in the exposed VM, specifically looking for Event ID 4625, which indicates failed logon attempts, and send that data to a log file. The PowerShell script also sends the IP address of any failed logons to IPgeolocation.io via an API, allowing that information to be used in Microsoft Sentinel to map where the logon attempts originated and then I made an alert that informs me of IP's that failed to login more than 3 times. This project was undertaken to gain experience with SIEMs, cloud concepts and resources, APIs, and Microsoft Azure. I learned how to provision and configure resources in the cloud, how to read SIEM logs, and much more.
 
 # Utilities & Environments Used
 -  Microsoft Azure
@@ -123,3 +123,23 @@ After I queried the data points I want, I now have to choose how I want to expre
 After a few minutes, just before I decided to wrap up the project, I observed that there were more than 1,000 failed logins, with most attempts originating from Ukraine, along with 2 from Canada and 3 from South Africa. It was evident that automated brute-forcing software was being used to try thousands of different password combinations and usernames. This underscores the importance of using strong passwords and uncommon usernames!
 
 ![Microsoft Sentinel](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(1).png)
+
+Now I created a alert that informs me when which IP has failed to login in more than 3 times. So I navigated to Microsoft Sentinel under the configuration at the Analtics section. The was already a alert created with a serverity of High. So I clicked the button create and choose the "Scheduled query rule", I configured the rule and called it "Multiple Login attempts from the same IP" and the severity is "Low" as I intentionally exposed the VM on the internet so the will be alot of people trying to gain access on it. If it was a vm that can only be accessed by an organization then the severity would be medium if indiviual in the workplace made more than 3 mistakes and high if it is an indiviual outside the organization.
+
+
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(70).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(69).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(68).png)
+
+After configuring the General section i was on the Set rule logic section and I had to create a rule query basically the logic for my analytic rule. So my rule is that the logs that have an EventID of 4625 count them by the IPaddress and if the counted IPaddress is counted more than 3 times it will alert me and which IP it is. Then after I clicked next till the review + create section and clicked save to save the rule. Minutes after I saved the rule the was already an IP that was captured the IP orginates from Netherlands at Amsterdam. I wanted to see if it was the only IP that i can find so I when to logs and I queryed them and I saw the only IP appearing is the one captured and it has 310 failed attempts.
+
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(67).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(66).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(65).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(64).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(63).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(62).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(61).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(60).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(54).png)
+![Microsoft Sentinel Alert](https://github.com/ofentse579/Images/blob/main/Microsoft%20SIEM/SIEM%20(51).png)
